@@ -281,15 +281,41 @@ h4, h5 { font-family: var(--font-body) !important; font-weight: 600 !important; 
 /* =====================================================================
    9) ไทล์หมวดหมู่
    ===================================================================== */
-.cat-tile { text-align: center; }
-.cat-ico {
-  width: 88px; height: 88px; margin: 0 auto .45rem; border-radius: 28px; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(145deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .03)); border: 1px solid var(--line-strong);
-  font-size: 2.4rem; box-shadow: var(--shadow-sm); transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+.cat-tile {
+  position: relative; z-index: 1; padding: 1.3rem 1rem .9rem;
+  display: flex; flex-direction: column; align-items: center; gap: .55rem;
 }
-.cat-tile:hover .cat-ico { transform: translateY(-5px) rotate(-3deg); box-shadow: var(--glow); border-color: var(--saffron); }
-.cat-name { font-weight: 600; color: var(--ink) !important; font-size: .95rem; }
-.cat-count { color: var(--dim) !important; font-size: .78rem; }
+.cat-name {
+  font-family: var(--font-head); font-weight: 700; font-size: 1.12rem; line-height: 1.3;
+  min-height: 2.9rem; display: flex; align-items: center; justify-content: center; text-align: center;
+  color: #FFFFFF !important; text-shadow: 0 1px 8px rgba(0, 0, 0, .45);
+}
+.cat-count {
+  display: block; padding: .12rem .85rem; border-radius: 999px; line-height: 1.5;
+  background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .25);
+  color: var(--gold-light) !important; font-size: .78rem; font-weight: 600;
+}
+/* การ์ดหมวดหมู่ แบบกระจกใส */
+[class*="st-key-catcard_"] {
+  position: relative; overflow: hidden; gap: .6rem !important; padding: 0 0 1rem 0;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, .05) 45%, rgba(255, 255, 255, .09) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, .28); border-radius: var(--radius);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .45);
+  transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+}
+[class*="st-key-catcard_"]::before {
+  content: ""; position: absolute; top: -40%; left: -30%; width: 90%; height: 90%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, .22), transparent 65%);
+}
+[class*="st-key-catcard_"]:hover {
+  transform: translateY(-6px); border-color: rgba(255, 200, 110, .75);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .4), 0 0 24px rgba(255, 159, 28, .28), inset 0 1px 0 rgba(255, 255, 255, .55);
+}
+[class*="st-key-catcard_"] .stButton { padding: 0 1rem; margin-top: .4rem; position: relative; z-index: 1; }
+[class*="st-key-catcard_"] [data-testid="stImage"] img { border-radius: 0; height: 150px; object-fit: cover; }
+[class*="st-key-catcard_"] [data-testid="stMarkdownContainer"] p { margin: 0; }
+[class*="st-key-catcard_"] [data-testid="stElementContainer"] { overflow: visible; }
 
 /* =====================================================================
    10) การ์ดอาหาร
