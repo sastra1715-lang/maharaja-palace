@@ -1,0 +1,11 @@
+# ธีมมืดสไตล์ 2026 (ม่วงมะเหมี่ยว + หญ้าฝรั่น) ให้สีของวิดเจ็ตดั้งเดิมของ Streamlit กลมกลืนกับดีไซน์
+[theme]
+base = "dark"
+primaryColor = "#FF9F1C"
+backgroundColor = "#0E0A14"
+secondaryBackgroundColor = "#1A1226"
+textColor = "#F7EFE3"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
