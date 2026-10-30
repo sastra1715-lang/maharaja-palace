@@ -288,12 +288,27 @@ def dish_grid(items, kp, per_row=4):
 
 # ---------------------------------------------------------------- หมวดหมู่ / โปรโมชัน / จุดเด่น
 
-def category_tiles(menu):
-    """การ์ดหมวดหมู่พร้อมรูปภาพอาหาร"""
-    cats = list(dict.fromkeys(
-        i["category"] for i in menu if i["category"]
-    ))
+_CAT_IMAGES = {
+    "ของทานเล่น": "starters.jpg",
+    "ทันดูรี": "tandoori.jpg",
+    "แกงอินเดีย": "curry.jpg",
+    "ข้าวและขนมปัง": "rice_bread.jpg",
+    "ของหวานและเครื่องดื่ม": "desserts.jpg",
+}
 
+
+def _cat_image(cat):
+    """path รูปประจำหมวดจากโฟลเดอร์ ui/images ถ้าไม่มีไฟล์คืน None (ไม่พึ่งฟังก์ชันใน assets.py)"""
+    name = _CAT_IMAGES.get(cat)
+    if not name:
+        return None
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images", name)
+    return path if os.path.isfile(path) else None
+
+
+def category_tiles(menu):
+    """การ์ดหมวดหมู่ กรอบกระจกใส: รูป (ถ้ามี) ชื่อ จำนวนเมนู และปุ่ม อยู่ในการ์ดเดียว"""
+    cats = list(dict.fromkeys(i["category"] for i in menu if i["category"]))
     if not cats:
         return
 
@@ -303,29 +318,24 @@ def category_tiles(menu):
         n = sum(1 for i in menu if i["category"] == cat)
 
         with cols[index % len(cols)]:
-            image_path = A.category_image(cat)
+            with st.container(key=f"catcard_{index}"):
+                image_path = _cat_image(cat)
 
-            if image_path:
-                st.image(image_path, use_container_width=True)
+                if image_path:
+                    st.image(image_path, use_container_width=True)
 
-            st.markdown(
-                f"""
-                <div class="cat-tile">
-                    <div class="cat-name">{esc(cat)}</div>
-                    <div class="cat-count">{n} เมนู</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+                # ใช้ render() เพื่อตัดช่องว่างหน้าบรรทัด ไม่งั้น Markdown มองเป็นบล็อกโค้ด (ทำให้มีแถบสีส้มพาดข้อความ)
+                render(f'<div class="cat-tile"><div class="cat-name">{esc(cat)}</div>'
+                       f'<div class="cat-count">{n} เมนู</div></div>')
 
-            st.button(
-                "ดูหมวดนี้",
-                key=f"cat_{index}_{cat}",
-                use_container_width=True,
-                on_click=go,
-                args=("เมนูอาหาร",),
-                kwargs={"menu_cat": cat}
-            )
+                st.button(
+                    "ดูหมวดนี้",
+                    key=f"cat_{index}_{cat}",
+                    use_container_width=True,
+                    on_click=go,
+                    args=("เมนูอาหาร",),
+                    kwargs={"menu_cat": cat},
+                )
 
 
 def promo_cards():
@@ -386,7 +396,7 @@ def spice_guide():
 
 def category_heading(cat, items, count):
     """หัวข้อหมวดอาหารพร้อมรูปภาพ"""
-    image_path = A.category_image(cat)
+    image_path = _cat_image(cat)
 
     if image_path:
         col_img, col_text = st.columns([1, 5])
