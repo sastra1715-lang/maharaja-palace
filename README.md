@@ -3,7 +3,7 @@
 ## วิธีใช้
 1. คัดลอกทุกไฟล์ในชุดนี้ไปทับโฟลเดอร์โปรเจกต์เดิม (โฟลเดอร์ที่มี `restaurant.db` อยู่) — **ไม่ต้องลบหรือแก้ฐานข้อมูล ข้อมูลเดิมอยู่ครบ**
 2. `pip install -r requirements.txt`
-3. python -m streamlit run app.py หรือ streamlit run app.py
+3. python -m streamlit run app.py 
    (คำสั่งเปิดเว็บ)
 
 
